@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense & Budget Visualizer</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="app-container">
+      <header>
+        <div class="header-top">
+          <h1>Budget Visualizer</h1>
+          <button
+            id="theme-toggle"
+            class="icon-btn"
+            aria-label="Toggle Dark Mode"
+          >
+            🌙
+          </button>
+        </div>
+
+        <div class="balance-card">
+          <p class="label">Total Spending</p>
+          <h2 id="total-balance">Rp 0</h2>
+          <div class="limit-control">
+            <label for="budget-limit">Spending Limit (Rp):</label>
+            <input
+              type="number"
+              id="budget-limit"
+              placeholder="e.g. 500000"
+              min="0"
+            />
+          </div>
+          <p id="limit-warning" class="warning-text hidden">
+            ⚠️ You have exceeded your spending limit!
+          </p>
+        </div>
+      </header>
+
+      <main>
+        <section class="card">
+          <h3>Add Expense</h3>
+          <form id="expense-form">
+            <div class="form-group">
+              <label for="item-name">Item Name</label>
+              <input
+                type="text"
+                id="item-name"
+                placeholder="e.g. Nasi Goreng"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="item-amount">Amount (Rp)</label>
+              <input
+                type="number"
+                id="item-amount"
+                placeholder="e.g. 25000"
+                min="1"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="item-category">Category</label>
+              <div class="category-row">
+                <select id="item-category" required>
+                  <option value="Food">Food</option>
+                  <option value="Transport">Transport</option>
+                  <option value="Fun">Fun</option>
+                </select>
+                <button
+                  type="button"
+                  id="toggle-custom-cat"
+                  class="secondary-btn"
+                >
+                  + Custom
+                </button>
+              </div>
+            </div>
+
+            <div id="custom-cat-box" class="form-group hidden">
+              <div class="category-row">
+                <input
+                  type="text"
+                  id="new-category-input"
+                  placeholder="New category name"
+                />
+                <button type="button" id="add-category-btn" class="primary-btn">
+                  Add
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" class="primary-btn full-width">
+              Add Transaction
+            </button>
+          </form>
+        </section>
+
+        <section class="card">
+          <h3>Spending by Category</h3>
+          <div class="chart-wrapper">
+            <canvas id="expense-chart"></canvas>
+          </div>
+          <div id="category-breakdown" class="breakdown-list"></div>
+        </section>
+
+        <section class="card">
+          <h3>Monthly Summary</h3>
+          <div id="monthly-summary" class="summary-list">
+            <p class="empty-msg">No monthly data yet.</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="list-header">
+            <h3>Transactions</h3>
+            <select id="sort-select" aria-label="Sort transactions">
+              <option value="newest">Newest First</option>
+              <option value="amount-desc">Amount: High to Low</option>
+              <option value="amount-asc">Amount: Low to High</option>
+              <option value="category">Category (A-Z)</option>
+            </select>
+          </div>
+
+          <ul id="transaction-list" class="transaction-list"></ul>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
